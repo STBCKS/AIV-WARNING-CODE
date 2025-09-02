@@ -15,10 +15,9 @@ data = pd.read_excel('raw_data.xlsx')
 X = data.drop(['NO.', 'AIV', 'ADRESS'], axis=1)
 y = data['AIV'].astype(int)
 
-random_state = 358
+
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, stratify=y, random_state=random_state
-)
+    X, y, test_size=0.2, stratify=y)
 
 # ===================== 2) StandardScaler =====================
 scaler = StandardScaler()
@@ -26,11 +25,11 @@ X_train_scaled = scaler.fit_transform(X_train)
 X_test_scaled  = scaler.transform(X_test)
 
 # ===================== 3) SMOTE =====================
-smote = SMOTE(sampling_strategy='minority', random_state=random_state)
+smote = SMOTE(sampling_strategy='minority')
 X_train_res, y_train_res = smote.fit_resample(X_train_scaled, y_train)
 
 # ===================== 4) StratifiedKFold =====================
-skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=random_state)
+skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=1)
 
 
 scoring = {
@@ -52,7 +51,7 @@ lgbm_param_grid = {
 
 # ===================== 6) GridSearchCV =====================
 lgbm_grid_search = GridSearchCV(
-    estimator=LGBMClassifier(random_state=random_state),
+    estimator=LGBMClassifier(random_state=1),
     param_grid=lgbm_param_grid,
     scoring=scoring,
     refit='f1',
@@ -102,4 +101,5 @@ plt.figure(figsize=(10, 8))
 shap.plots.bar(shap_values, max_display=21, show=False)
 plt.tight_layout()
 plt.savefig('all importance.tif', dpi=300, format='tiff', bbox_inches='tight')
+
 plt.show()
