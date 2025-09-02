@@ -40,13 +40,11 @@ scoring = {
 
 # ===================== 5) Parameter  =====================
 lgbm_param_grid = {
-    'n_estimators': [100],
-    'learning_rate': [ 0.1],
-    'num_leaves': [31, 63],
-    'max_depth': [7, 10],
-    'subsample': [0.8],
-    'colsample_bytree': [0.8],
-    'verbosity': [-1]
+    'n_estimators': list(range(1, 200, 1)),
+    'num_leaves': list(range(1, 100, 1)),
+    'max_depth': list(range(1, 10, 1)),
+    'subsample': [0.5,0.6,0.7,0.8,0.9,1.0],
+    'colsample_bytree': [0.5,0.6,0.7,0.8,0.9,1.0],
 }
 
 # ===================== 6) GridSearchCV =====================
@@ -103,3 +101,4 @@ plt.tight_layout()
 plt.savefig('all importance.tif', dpi=300, format='tiff', bbox_inches='tight')
 
 plt.show()
+
