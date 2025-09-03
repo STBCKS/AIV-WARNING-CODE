@@ -17,7 +17,7 @@ y = data['AIV'].astype(int)
 
 
 X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, stratify=y)
+    X, y, test_size=0.2, stratify=y,random_state = 1)
 
 # ===================== 2) StandardScaler =====================
 scaler = StandardScaler()
@@ -101,4 +101,5 @@ plt.tight_layout()
 plt.savefig('all importance.tif', dpi=300, format='tiff', bbox_inches='tight')
 
 plt.show()
+
 
